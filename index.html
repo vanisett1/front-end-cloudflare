@@ -34,6 +34,7 @@
         }
 
         /* Simulated terminal for DevOps logs */
+        
         .terminal {
             background-color: #333;
             color: #0f0;
@@ -46,7 +47,16 @@
             max-height: 200px;
             overflow-y: auto;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-            animation: fadeInUp 2s ease-in-out forwards;
+            animation: fadeInUp 1s ease-in-out forwards;
+            transition: max-height 1s ease-in-out, padding 1s ease-in-out; /* Smooth transition for resize */
+        }
+
+        .terminal.centered {
+            display: flex;
+            justify-content: center; /* Centers the text horizontally */
+            align-items: center;     /* Centers the text vertically */
+            text-align: center;      /* Centers the text within the pre */
+            transition: max-height 1s ease-in-out, padding 1s ease-in-out; /* Extend the duration and ease the transition */
         }
 
         .terminal pre {
@@ -108,16 +118,8 @@
     </div>
 
     <!-- Terminal logs simulation -->
-    <div class="terminal">
-        <pre id="log-output">Initializing build...
-Setting up environment...
-Fetching dependencies...
-Running tests...
-Tests passed: 32/32 ✅
-Deploying to production...
-Deploying...
-Deployment successful. 🚀
-AGKLYA is live and under construction. Please check back soon!</pre>
+    <div class="terminal" id="terminal">
+        <pre id="log-output">Initializing build...</pre>
     </div>
 
     <!-- Email section -->
@@ -128,6 +130,7 @@ AGKLYA is live and under construction. Please check back soon!</pre>
     <script>
         // Optional: Animate the logs to make them appear one after the other
         let logOutput = document.getElementById('log-output');
+        let terminal = document.getElementById('terminal');
         let logs = [
             'Initializing build...',
             'Setting up environment...',
@@ -148,6 +151,14 @@ AGKLYA is live and under construction. Please check back soon!</pre>
                 logOutput.textContent += `${logs[logIndex]}\n`;
                 logIndex++;
                 setTimeout(simulateLogs, 1000); // Adjust timing as needed
+            } else {
+                // After all logs have appeared, shrink the terminal box
+                setTimeout(() => {
+                    terminal.classList.add('centered'); // Add centered class
+                    terminal.style.maxHeight = "100px"; // Shrink height
+                    terminal.style.padding = "10px";    // Reduce padding
+                    logOutput.textContent = logs[logs.length - 1]; // Show only the final message
+                }, 2000); // Adjust this timeout as needed
             }
         }
 
