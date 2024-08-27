@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGKLYA - Welcome</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Include Raleway font -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
     <style>
         body {
             display: flex;
@@ -18,12 +16,8 @@
             background-color: #000;
             color: #FF6347;
             font-family: 'Raleway', sans-serif;
-        }
-
-        .draggable {
-            position: absolute;
-            cursor: grab;
-            touch-action: none;
+            position: relative;
+            overflow: hidden;
         }
 
         .logo-container {
@@ -35,102 +29,75 @@
             width: 80%;
             max-width: 400px;
             height: auto;
-            transition: transform 0.2s;
         }
 
-        .construction-message {
-            font-size: 2em;
-            font-weight: bold;
-            text-align: center;
+        /* Simulated terminal for DevOps logs */
+        .terminal {
+            background-color: #333;
+            color: #0f0;
+            font-family: monospace;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 600px;
             margin-top: 20px;
-            animation: blink 1.5s infinite;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
         }
 
-        .sub-message {
-            font-size: 1.5em;
-            margin-top: 20px;
-            text-align: center;
-            padding: 0 10px;
-            line-height: 1.5em;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Ensure proper scaling on smaller screens */
-        @media (max-width: 768px) {
-            .construction-message {
-                font-size: 1.8em;
-            }
-            .sub-message {
-                font-size: 1.3em;
-            }
+        .terminal pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <div class="logo-container draggable" id="logo">
+    <div class="logo-container">
         <img src="images/logo.gif" alt="AGKLYA Logo" class="logo">
     </div>
 
-    <div class="construction-message draggable" id="message">
-        🚧 Shaping the Future, Brick by Brick! 🚧
-    </div>
-
-    <div class="sub-message draggable" id="sub-message">
-        <span class="emoji">✨</span> We’re busy crafting something extraordinary. <br>
-        Please check back soon to see the magic unfold! <span class="emoji">✨</span>
+    <!-- Terminal logs simulation -->
+    <div class="terminal">
+        <pre id="log-output">Initializing build...
+Setting up environment...
+Fetching dependencies...
+Running tests...
+Tests passed: 32/32 ✅
+Deploying to production...
+Deploying...
+Deployment successful. 🚀
+AGKLYA is live and under construction. Please check back soon!</pre>
     </div>
 
     <script>
-        // The JavaScript code for dragging and zooming remains the same
-        function makeDraggable(element) {
-            let isDragging = false;
-            let startX, startY, initialX, initialY;
+        // Optional: Animate the logs to make them appear one after the other
+        let logOutput = document.getElementById('log-output');
+        let logs = [
+            'Initializing build...',
+            'Setting up environment...',
+            'Fetching dependencies...',
+            'Running tests...',
+            'Tests passed: 32/32 ✅',
+            'Deploying to production...',
+            'Deploying...',
+            'Deployment successful. 🚀',
+            'AGKLYA is live and under construction. Please check back soon!'
+        ];
 
-            element.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX - element.offsetLeft;
-                startY = e.clientY - element.offsetTop;
-                element.style.cursor = 'grabbing';
-            });
+        let logIndex = 0;
+        logOutput.textContent = ''; // Clear the log initially
 
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                element.style.left = `${e.clientX - startX}px`;
-                element.style.top = `${e.clientY - startY}px`;
-            });
-
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-                element.style.cursor = 'grab';
-            });
-
-            // Touch events for mobile
-            element.addEventListener('touchstart', (e) => {
-                isDragging = true;
-                startX = e.touches[0].clientX - element.offsetLeft;
-                startY = e.touches[0].clientY - element.offsetTop;
-            });
-
-            element.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                element.style.left = `${e.touches[0].clientX - startX}px`;
-                element.style.top = `${e.touches[0].clientY - startY}px`;
-            });
-
-            element.addEventListener('touchend', () => {
-                isDragging = false;
-            });
+        function simulateLogs() {
+            if (logIndex < logs.length) {
+                logOutput.textContent += `${logs[logIndex]}\n`;
+                logIndex++;
+                setTimeout(simulateLogs, 1000); // Adjust timing as needed
+            }
         }
 
-        makeDraggable(document.getElementById('logo'));
-        makeDraggable(document.getElementById('message'));
-        makeDraggable(document.getElementById('sub-message'));
-
-        // Zoom handling for desktop and mobile remains the same
+        simulateLogs();
     </script>
 </body>
 </html>
