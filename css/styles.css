@@ -1,68 +1,36 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
+.logo-container {
+    position: relative;
 }
 
 .logo {
-    height: 50px;
+    max-width: 100%;
+    height: auto;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.hero {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #0066cc;
-    color: #fff;
-}
-
-.btn {
-    background-color: #ff6600;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn:hover {
-    background-color: #ff8533;
-}
-
-.content {
-    padding: 20px;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
+/* Clickable dot */
+.dot {
     position: absolute;
-    width: 100%;
-    bottom: 0;
+    top: 25%; /* Adjust this value to position the dot */
+    left: 70%; /* Adjust this value to position the dot */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: transparent; /* Transparent, only for clickable area */
+    cursor: pointer;
+    z-index: 2; /* Ensure it is above the logo */
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Optional hover effect */
 }
