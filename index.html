@@ -73,33 +73,46 @@
     <script>
         // Make elements draggable
         function makeDraggable(element) {
-            let isMouseDown = false;
+            let isDragging = false;
             let startX, startY, initialX, initialY;
 
             element.addEventListener('mousedown', (e) => {
-                isMouseDown = true;
+                isDragging = true;
                 startX = e.clientX - element.offsetLeft;
                 startY = e.clientY - element.offsetTop;
                 element.style.cursor = 'grabbing';
             });
 
             window.addEventListener('mousemove', (e) => {
-                if (!isMouseDown) return;
+                if (!isDragging) return;
                 element.style.left = `${e.clientX - startX}px`;
                 element.style.top = `${e.clientY - startY}px`;
             });
 
             window.addEventListener('mouseup', () => {
-                isMouseDown = false;
+                isDragging = false;
                 element.style.cursor = 'grab';
+            });
+
+            // Touch events for mobile
+            element.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX - element.offsetLeft;
+                startY = e.touches[0].clientY - element.offsetTop;
+            });
+
+            element.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                element.style.left = `${e.touches[0].clientX - startX}px`;
+                element.style.top = `${e.touches[0].clientY - startY}px`;
+            });
+
+            element.addEventListener('touchend', () => {
+                isDragging = false;
             });
         }
 
-        makeDraggable(document.getElementById('logo'));
-        makeDraggable(document.getElementById('message'));
-        makeDraggable(document.getElementById('sub-message'));
-
-        // Enable zoom in and zoom out
+        // Zoom handling for desktop (wheel event)
         document.addEventListener('wheel', function(e) {
             if (e.ctrlKey) {
                 e.preventDefault();
@@ -109,6 +122,43 @@
                 document.getElementById('sub-message').style.transform = `scale(${1 + zoom})`;
             }
         });
+
+        // Pinch-to-zoom for mobile
+        let initialDistance = null;
+
+        document.addEventListener('touchmove', function(e) {
+            if (e.touches.length == 2) {
+                e.preventDefault();
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+
+                // Calculate the distance between the two touches
+                const currentDistance = Math.sqrt(
+                    Math.pow(touch2.clientX - touch1.clientX, 2) +
+                    Math.pow(touch2.clientY - touch1.clientY, 2)
+                );
+
+                if (initialDistance == null) {
+                    initialDistance = currentDistance;
+                }
+
+                const scale = currentDistance / initialDistance;
+
+                document.getElementById('logo').style.transform = `scale(${scale})`;
+                document.getElementById('message').style.transform = `scale(${scale})`;
+                document.getElementById('sub-message').style.transform = `scale(${scale})`;
+            }
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (e.touches.length < 2) {
+                initialDistance = null;
+            }
+        });
+
+        makeDraggable(document.getElementById('logo'));
+        makeDraggable(document.getElementById('message'));
+        makeDraggable(document.getElementById('sub-message'));
     </script>
 </body>
 </html>
