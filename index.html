@@ -57,21 +57,19 @@
 
         /* Email section */
         .email {
-            margin-top: 20px;
-            color: #FF6347;
-            font-size: 18px;
+            position: absolute;
+            bottom: 10px;
+            color: #fff;
+            font-size: 20px;
             text-align: center;
             opacity: 0;
-            animation: fadeIn 3s ease-in-out forwards, glow 1.5s ease-in-out infinite alternate;
+            animation: fadeIn 3s ease-in-out forwards, subtleGlow 2s ease-in-out infinite alternate;
+            font-family: 'Raleway', sans-serif;
         }
 
         .email a {
-            color: #FF6347;
+            color: #fff;
             text-decoration: none;
-        }
-
-        .email a:hover {
-            text-decoration: underline;
         }
 
         /* Keyframe animations */
@@ -103,12 +101,12 @@
             }
         }
 
-        @keyframes glow {
+        @keyframes subtleGlow {
             from {
-                text-shadow: 0 0 10px #FF6347, 0 0 20px #FF6347, 0 0 30px #FF6347, 0 0 40px #FF6347, 0 0 50px #FF6347, 0 0 60px #FF6347, 0 0 70px #FF6347;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 25px #fff, 0 0 30px #fff, 0 0 35px #fff;
             }
             to {
-                text-shadow: 0 0 20px #FF6347, 0 0 30px #FF6347, 0 0 40px #FF6347, 0 0 50px #FF6347, 0 0 60px #FF6347, 0 0 70px #FF6347, 0 0 80px #FF6347;
+                text-shadow: 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 25px #fff, 0 0 30px #fff, 0 0 35px #fff, 0 0 40px #fff;
             }
         }
     </style>
@@ -133,7 +131,7 @@ AGKLYA is live and under construction. Please check back soon!</pre>
 
     <!-- Email section -->
     <div class="email">
-        For inquiries, contact us at <a href="mailto:info@agklya.com">info@agklya.com</a>
+        <a href="mailto:info@agklya.com">info@agklya.com</a>
     </div>
 
     <script>
