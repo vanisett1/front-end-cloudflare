@@ -6,13 +6,23 @@
     <title>AGKLYA - Welcome</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .construction-message {
-            font-size: 2em;
+        .logo-container {
             text-align: center;
             margin-top: 50px;
+        }
+
+        .logo {
+            width: 300px; /* Increase this value to make the logo bigger */
+            max-width: 100%;
+            height: auto;
+        }
+
+        .construction-message {
+            font-size: 2em;
             color: #FF6347;
             font-weight: bold;
             animation: blink 1s infinite;
+            margin-top: 30px; /* Space between logo and text */
         }
 
         @keyframes blink {
@@ -22,9 +32,9 @@
 
         .sub-message {
             font-size: 1.2em;
-            text-align: center;
             color: #333;
-            margin-top: 20px;
+            margin-top: 10px;
+            text-align: center;
         }
 
         .emoji {
@@ -35,16 +45,13 @@
 <body>
     <div class="logo-container">
         <img src="images/logo.gif" alt="AGKLYA Logo" class="logo">
-        <a href="next-page.html" class="dot"></a>
-    </div>
-
-    <div class="construction-message">
-        🚧 Shaping the Future, Brick by Brick! 🚧
-    </div>
-
-    <div class="sub-message">
-        <span class="emoji">✨</span> We’re busy crafting something extraordinary. <br>
-        Please check back soon to see the magic unfold! <span class="emoji">✨</span>
+        <div class="construction-message">
+            🚧 Shaping the Future, Brick by Brick! 🚧
+        </div>
+        <div class="sub-message">
+            <span class="emoji">✨</span> We’re busy crafting something extraordinary. <br>
+            Please check back soon to see the magic unfold! <span class="emoji">✨</span>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
