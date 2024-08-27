@@ -6,24 +6,42 @@
     <title>AGKLYA - Welcome</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #FF6347;
+        }
+
+        .draggable {
+            position: absolute;
+            cursor: grab;
+            touch-action: none; /* Disable default touch interactions */
+        }
+
         .logo-container {
             text-align: center;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .logo {
-            width: 80%; /* Responsive width, adjusts based on screen size */
-            max-width: 400px; /* Ensures logo doesn’t get too large */
+            width: 80%;
+            max-width: 400px;
             height: auto;
+            transition: transform 0.2s;
         }
 
-        .construction-message {
+        .construction-message, .sub-message {
             font-size: 1.8em;
-            color: #FF6347;
             font-weight: bold;
-            margin-top: 20px;
             animation: blink 1.5s infinite;
             text-align: center;
+            margin: 10px;
+            transition: transform 0.2s;
         }
 
         @keyframes blink {
@@ -31,44 +49,66 @@
             50% { opacity: 0; }
         }
 
-        .sub-message {
-            font-size: 1.2em;
-            color: #333;
-            margin-top: 15px;
-            text-align: center;
-            padding: 0 10px; /* Padding for better readability on mobile */
-        }
-
-        .emoji {
-            font-size: 1.5em;
-        }
-
-        /* Ensuring the text and logo are well positioned on smaller screens */
         @media (max-width: 768px) {
-            .construction-message {
+            .construction-message, .sub-message {
                 font-size: 1.5em;
-            }
-            .sub-message {
-                font-size: 1em;
-            }
-            .emoji {
-                font-size: 1.2em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="logo-container">
+    <div class="logo-container draggable" id="logo">
         <img src="images/logo.gif" alt="AGKLYA Logo" class="logo">
-        <div class="construction-message">
-            🚧 Shaping the Future, Brick by Brick! 🚧
-        </div>
-        <div class="sub-message">
-            <span class="emoji">✨</span> We’re busy crafting something extraordinary. <br>
-            Please check back soon to see the magic unfold! <span class="emoji">✨</span>
-        </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <div class="construction-message draggable" id="message">
+        🚧 Shaping the Future, Brick by Brick! 🚧
+    </div>
+
+    <div class="sub-message draggable" id="sub-message">
+        <span class="emoji">✨</span> We’re busy crafting something extraordinary. <br>
+        Please check back soon to see the magic unfold! <span class="emoji">✨</span>
+    </div>
+
+    <script>
+        // Make elements draggable
+        function makeDraggable(element) {
+            let isMouseDown = false;
+            let startX, startY, initialX, initialY;
+
+            element.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                startX = e.clientX - element.offsetLeft;
+                startY = e.clientY - element.offsetTop;
+                element.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isMouseDown) return;
+                element.style.left = `${e.clientX - startX}px`;
+                element.style.top = `${e.clientY - startY}px`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                isMouseDown = false;
+                element.style.cursor = 'grab';
+            });
+        }
+
+        makeDraggable(document.getElementById('logo'));
+        makeDraggable(document.getElementById('message'));
+        makeDraggable(document.getElementById('sub-message'));
+
+        // Enable zoom in and zoom out
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey) {
+                e.preventDefault();
+                let zoom = e.deltaY * -0.01;
+                document.getElementById('logo').style.transform = `scale(${1 + zoom})`;
+                document.getElementById('message').style.transform = `scale(${1 + zoom})`;
+                document.getElementById('sub-message').style.transform = `scale(${1 + zoom})`;
+            }
+        });
+    </script>
 </body>
 </html>
