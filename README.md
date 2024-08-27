@@ -1,7 +1,7 @@
 # front-end
 
 ```json
-static-site/
+/
 ├── index.html
 ├── about.html
 ├── contact.html
